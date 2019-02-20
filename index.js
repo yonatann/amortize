@@ -27,17 +27,17 @@ var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principal
 
   // Calculate monthly interest rate and monthly payment
   periodInt = (rate / 12) / 100;
-  
+
   if (repaymentType == "amortize") {
     monthlyPayment = amount * (periodInt / (1 - Math.pow(1 + periodInt, -(totalTerm))));
     // If zero or NaN is returned (i.e. if the rate is 0) calculate the payment without interest
-    monthlyPayment = monthlyPayment || amount / totalTerm;  
+    monthlyPayment = monthlyPayment || amount / totalTerm;
   } else if (repaymentType == "equal-principal-payment") {
     montlyPrincipalPayment = amount / totalTerm;
   } else {
     return {error: "unsupported repaymentType"};
   }
-  
+
   // Calculate the interest, principal, and remaining balance for each period
   let boundedMonthlyPayment, termOffset;
   var i = 0;
@@ -57,7 +57,7 @@ var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principal
     amount = amount - monthlyPrincPaid;
     i += 1;
   }
-  
+
   summedAmortize.termOffset = termOffset;
   summedAmortize.termsSaved = amortizeTerm - i;
   summedAmortize.principalPaymentsTotal = i * principalPayment;
@@ -73,7 +73,7 @@ var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principal
     principal: monthlyPrincPaid,
     interest: monthlyIntPaid
   }
-  
+
   return summedAmortize;
 
 };
@@ -120,10 +120,10 @@ var roundNum = function(numObj) {
 var amortize = function(opts) {
   errorCheck(opts);
   var amortized = amortizationCalc(
-    opts.amount, 
-    opts.rate, 
-    opts.totalTerm, 
-    opts.amortizeTerm, 
+    opts.amount,
+    opts.rate,
+    opts.totalTerm,
+    opts.amortizeTerm,
     opts.principalPayment,
     opts.repaymentType || 'amortize',
     opts.partialMonthOffset || 1);
