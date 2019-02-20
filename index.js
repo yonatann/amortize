@@ -11,10 +11,10 @@
  * @param {number} amortizeTerm
  * @param {number} principalPayment
  * @param {string} repaymentType
- * @param {number} partialMonthOffest - use this if you need to offest the beginig of the payment
+ * @param {number} partialMonthOffset - use this if you need to offest the beginig of the payment
  * @returns {object}
  */
-var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principalPayment, repaymentType, partialMonthOffest) {
+var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principalPayment, repaymentType, partialMonthOffset) {
   var periodInt,
       monthlyPayment,
       summedInterest = 0,
@@ -44,7 +44,7 @@ var amortizationCalc = function(amount, rate, totalTerm, amortizeTerm, principal
   while( i < amortizeTerm) {
     if(amount < 0)
       break;
-    termOffset = (i == 0 ? partialMonthOffest : 1);
+    termOffset = (i == 0 ? partialMonthOffset : 1);
     // console.log(`amount: ${amount}, periodInt: ${periodInt}, termOffset: ${termOffset}`);
     monthlyIntPaid = amount * periodInt * termOffset;
     if (repaymentType == "equal-principal-payment") {
@@ -126,7 +126,7 @@ var amortize = function(opts) {
     opts.amortizeTerm, 
     opts.principalPayment,
     opts.repaymentType || 'amortize',
-    opts.partialMonthOffest || 1);
+    opts.partialMonthOffset || 1);
   return roundNum(amortized);
 };
 
